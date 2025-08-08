@@ -3,6 +3,7 @@ sys.path.append("../RoomBookingBot")
 
 import text
 import config
+from .Booking import Booking
 from telegram import Update
 from telegram.ext import (
     ContextTypes, 
@@ -14,40 +15,11 @@ from telegram.ext import (
 
 #Conversation States
 NAME, PAX, DATE, TIME, PURPOSE, SCREEN, REQUEST = range(7)
-
-class Booking:
-    def __init__(
-            self = None, 
-            name= None, 
-            pax= None, 
-            date= None, 
-            time= None, 
-            purpose= None,
-            screen= None, 
-            request= None):
-        self.name = name
-        self.pax = pax
-        self.date = date
-        self.time = time
-        self.purpose = purpose
-        self.screen = screen
-        self.request = request
-    
-    def __str__(self):
-        res = ""
-        if self.name : res += ("Name: " + self.name + '\n')
-        if self.pax : res += ("Number of people: " + self.pax + '\n')
-        if self.date : res += ("Date: " + self.date + '\n')
-        if self.time : res += ("Time: " + self.time + '\n')
-        if self.purpose : res += ("Purpose: " + self.purpose + '\n')
-        if self.screen : res += ("Need Screen: " + self.screen + '\n')
-        if self.request : res += ("Requests: " + self.request + '\n')
-        if res == "" : res = "Empty"
-        return res
+PARSEMODE = 'MarkdownV2'
     
 # for each command, asks for the next piece of info and stores the result in a booking object nested in telegram user_data
 async def book(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    await update.message.reply_text(text.BOOKING_MSG)
+    await update.message.reply_text(text.BOOKING_MSG, parse_mode=PARSEMODE)
     return NAME
 
 async def name(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -99,6 +71,7 @@ conv_handler = ConversationHandler(
             DATE: [MessageHandler(filters.TEXT & (~filters.Text(["/cancel", "/Cancel", "/CANCEL"])), date)],
             TIME: [MessageHandler(filters.TEXT & (~filters.Text(["/cancel", "/Cancel", "/CANCEL"])), time)],
             PURPOSE: [MessageHandler(filters.TEXT & (~filters.Text(["/cancel", "/Cancel", "/CANCEL"])), purpose)],
+            SCREEN: [MessageHandler(filters.TEXT & (~filters.Text(["/cancel", "/Cancel", "/CANCEL"])), screen)],
             REQUEST: [MessageHandler(filters.TEXT & (~filters.Text(["/cancel", "/Cancel", "/CANCEL"])), request)],
         },
         fallbacks=[CommandHandler("cancel", cancel)],
