@@ -13,7 +13,7 @@ from telegram.ext import (
 )
 
 #Conversation States
-NAME, PAX, DATE, TIME, PURPOSE, REQUEST = range(6)
+NAME, PAX, DATE, TIME, PURPOSE, SCREEN, REQUEST = range(7)
 
 class Booking:
     def __init__(
@@ -22,13 +22,15 @@ class Booking:
             pax= None, 
             date= None, 
             time= None, 
-            purpose= None, 
+            purpose= None,
+            screen= None, 
             request= None):
         self.name = name
         self.pax = pax
         self.date = date
         self.time = time
         self.purpose = purpose
+        self.screen = screen
         self.request = request
     
     def __str__(self):
@@ -38,6 +40,7 @@ class Booking:
         if self.date : res += ("Date: " + self.date + '\n')
         if self.time : res += ("Time: " + self.time + '\n')
         if self.purpose : res += ("Purpose: " + self.purpose + '\n')
+        if self.screen : res += ("Need Screen: " + self.screen + '\n')
         if self.request : res += ("Requests: " + self.request + '\n')
         if res == "" : res = "Empty"
         return res
@@ -71,6 +74,11 @@ async def time(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 async def purpose(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     context.user_data["booking"].purpose = update.message.text.split('\n')[0]
     await update.message.reply_text(text.PURPOSE_MSG)
+    return SCREEN
+
+async def screen(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    context.user_data["booking"].screen = update.message.text.split('\n')[0]
+    await update.message.reply_text(text.SCREEN_MSG)
     return REQUEST
     
 async def request(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:

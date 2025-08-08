@@ -12,6 +12,7 @@ if you have reccuring dates, just write your requirements (e.g. every tuesday)""
 DATE_MSG = "Enter time room should be booked for"
 TIME_MSG = "Enter the reason for room booking"
 PURPOSE_MSG = "Enter extra requests or NA if none"
+SCREEN_MSG = "Do you need a screen? (Enter yes or no)"
 REQUEST_MSG = "Your room booking request has been sent!"
 
 
