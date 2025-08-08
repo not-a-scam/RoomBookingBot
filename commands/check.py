@@ -17,45 +17,45 @@ from telegram.ext import (
 NAME, PAX, DATE, TIME, PURPOSE, SCREEN, REQUEST = range(7)
     
 # for each command, asks for the next piece of info and stores the result in a booking object nested in telegram user_data
-async def book(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    await update.message.reply_text(text.NAME_MSG, parse_mode=config.PARSEMODE)
+async def check(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    await update.message.reply_text(text.NAME_CHECK_MSG, parse_mode=config.PARSEMODE)
     return NAME
 
 async def name(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     nameInput = update.message.text.split('\n')[0]
-    context.user_data["booking"] = Booking(name = nameInput)
+    context.user_data["checking"] = Booking(name = nameInput)
     await update.message.reply_text(text.PAX_MSG, parse_mode=config.PARSEMODE)
     return PAX
 
 async def pax(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    context.user_data["booking"].pax = update.message.text.split('\n')[0]
+    context.user_data["checking"].pax = update.message.text.split('\n')[0]
     await update.message.reply_text(text.DATE_MSG, parse_mode=config.PARSEMODE)
     return DATE
 
 async def date(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    context.user_data["booking"].date = update.message.text.split('\n')[0]
+    context.user_data["checking"].date = update.message.text.split('\n')[0]
     await update.message.reply_text(text.TIME_MSG, parse_mode=config.PARSEMODE)
     return TIME
     
 async def time(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    context.user_data["booking"].time = update.message.text.split('\n')[0]
+    context.user_data["checking"].time = update.message.text.split('\n')[0]
     await update.message.reply_text(text.PURPOSE_MSG, parse_mode=config.PARSEMODE)
     return PURPOSE
 
 async def purpose(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    context.user_data["booking"].purpose = update.message.text.split('\n')[0]
+    context.user_data["checking"].purpose = update.message.text.split('\n')[0]
     await update.message.reply_text(text.SCREEN_MSG, parse_mode=config.PARSEMODE)
     return SCREEN
 
 async def screen(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    context.user_data["booking"].screen = update.message.text.split('\n')[0]
+    context.user_data["checking"].screen = update.message.text.split('\n')[0]
     await update.message.reply_text(text.REQUEST_MSG, parse_mode=config.PARSEMODE)
     return REQUEST
     
 async def request(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    context.user_data["booking"].request = update.message.text.split('\n')[0]
-    await update.message.reply_text(text.BOOKED_MSG + "\n\n" + context.user_data["booking"].__str__(), parse_mode=config.PARSEMODE)
-    await context.bot.send_message(chat_id=config.RBC_GRP_ID, text="Room Booking Request: \n\n" + context.user_data["booking"].__str__())
+    context.user_data["checking"].request = update.message.text.split('\n')[0]
+    await update.message.reply_text(text.CHECKED_MSG + "\n\n" + context.user_data["checking"].__str__(), parse_mode=config.PARSEMODE)
+    await context.bot.send_message(chat_id=config.RBC_GRP_ID, text="Room Checking Request: \n\n" + context.user_data["checking"].__str__())
     return ConversationHandler.END
     
 async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -63,7 +63,7 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     return ConversationHandler.END
 
 conv_handler = ConversationHandler(
-        entry_points=[CommandHandler("book", book)],
+        entry_points=[CommandHandler("check", check)],
         states={
             NAME: [MessageHandler(filters.TEXT & (~filters.Text(["/cancel", "/Cancel", "/CANCEL"])), name)],
             PAX: [MessageHandler(filters.TEXT & (~filters.Text(["/cancel", "/Cancel", "/CANCEL"])), pax)],
