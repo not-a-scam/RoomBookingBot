@@ -86,12 +86,12 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 conv_handler = ConversationHandler(
         entry_points=[CommandHandler("book", book)],
         states={
-            NAME: [MessageHandler(filters.TEXT, name)],
-            PAX: [MessageHandler(filters.TEXT, pax)],
-            DATE: [MessageHandler(filters.TEXT, date)],
-            TIME: [MessageHandler(filters.TEXT, time)],
-            PURPOSE: [MessageHandler(filters.TEXT, purpose)],
-            REQUEST: [MessageHandler(filters.TEXT, request)],
+            NAME: [MessageHandler(filters.TEXT & (~filters.Text(["/cancel", "/Cancel", "/CANCEL"])), name)],
+            PAX: [MessageHandler(filters.TEXT & (~filters.Text(["/cancel", "/Cancel", "/CANCEL"])), pax)],
+            DATE: [MessageHandler(filters.TEXT & (~filters.Text(["/cancel", "/Cancel", "/CANCEL"])), date)],
+            TIME: [MessageHandler(filters.TEXT & (~filters.Text(["/cancel", "/Cancel", "/CANCEL"])), time)],
+            PURPOSE: [MessageHandler(filters.TEXT & (~filters.Text(["/cancel", "/Cancel", "/CANCEL"])), purpose)],
+            REQUEST: [MessageHandler(filters.TEXT & (~filters.Text(["/cancel", "/Cancel", "/CANCEL"])), request)],
         },
         fallbacks=[CommandHandler("cancel", cancel)],
     )
