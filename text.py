@@ -1,0 +1,1 @@
+START_MESSAGE = "Welcome to the COOS Youth Room Booking Bot!"
