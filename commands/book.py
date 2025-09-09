@@ -3,7 +3,8 @@ sys.path.append("../RoomBookingBot")
 
 import text
 import config
-from utils.whitelist import whitelist_only    
+from utils.whitelist import whitelist_only 
+from utils.group import load_group_id   
 from .Booking import Booking
 from telegram import Update
 from telegram.ext import (
@@ -57,7 +58,7 @@ async def screen(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 async def request(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     context.user_data["booking"].request = update.message.text.split('\n')[0]
     await update.message.reply_text(text.BOOKED_MSG + "\n\n" + context.user_data["booking"].__str__(), parse_mode=config.PARSEMODE)
-    await context.bot.send_message(chat_id=config.RBC_GRP_ID, text="Room Booking Request: \n\n" + context.user_data["booking"].__str__())
+    await context.bot.send_message(chat_id=load_group_id(), text="Room Booking Request: \n\n" + context.user_data["booking"].__str__())
     return ConversationHandler.END
     
 async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
