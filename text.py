@@ -1,7 +1,7 @@
-START_MSG = "Welcome to the COOS Youth Room Booking Bot\!"
+START_MSG = "Welcome to the COOS Youth Room Booking Bot!"
 
 #Booking Convo Text
-NAME_MSG = """Welcome to the COOS Youth Room Booking Bot\! 
+NAME_MSG = """Welcome to the COOS Youth Room Booking Bot! 
 You may type /cancel at anytime to exit booking
 
 *Enter the name to be booked under*"""
@@ -17,7 +17,7 @@ BOOKED_MSG = "*Your room booking request has been sent\!*"
 
 CANCEL_MSG = "Operation Cancelled"
 
-NAME_CHECK_MSG = """Welcome to the COOS Youth Room Booking Bot\! 
+NAME_CHECK_MSG = """Welcome to the COOS Youth Room Booking Bot! 
 You may type /cancel at anytime to exit checking
 
 *Enter the name to be checked under*"""

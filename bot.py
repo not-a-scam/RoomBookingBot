@@ -1,6 +1,7 @@
 import config
 from telegram.ext import ApplicationBuilder, CommandHandler
-from commands import start, book, check
+from commands import start, book, check, adduser, register, removeuser
+
 
 if __name__ == '__main__':
             
@@ -8,5 +9,8 @@ if __name__ == '__main__':
     app.add_handler(CommandHandler("Start", start.start))
     app.add_handler(book.conv_handler)
     app.add_handler(check.conv_handler)
+    app.add_handler(CommandHandler("adduser", adduser.adduser))
+    app.add_handler(CommandHandler("register", register.register))
+    app.add_handler(CommandHandler("removeuser", removeuser.removeuser))
 
     app.run_polling()

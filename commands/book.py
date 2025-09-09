@@ -3,6 +3,7 @@ sys.path.append("../RoomBookingBot")
 
 import text
 import config
+from utils.whitelist import whitelist_only    
 from .Booking import Booking
 from telegram import Update
 from telegram.ext import (
@@ -17,6 +18,7 @@ from telegram.ext import (
 NAME, PAX, DATE, TIME, PURPOSE, SCREEN, REQUEST = range(7)
     
 # for each command, asks for the next piece of info and stores the result in a booking object nested in telegram user_data
+@whitelist_only
 async def book(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await update.message.reply_text(text.NAME_MSG, parse_mode=config.PARSEMODE)
     return NAME

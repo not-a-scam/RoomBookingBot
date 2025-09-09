@@ -5,6 +5,7 @@ import text
 import config
 from .Booking import Booking
 from telegram import Update
+from utils.whitelist import whitelist_only
 from telegram.ext import (
     ContextTypes, 
     ConversationHandler, 
@@ -17,6 +18,7 @@ from telegram.ext import (
 NAME, PAX, DATE, TIME, PURPOSE, SCREEN, REQUEST = range(7)
     
 # for each command, asks for the next piece of info and stores the result in a booking object nested in telegram user_data
+@whitelist_only
 async def check(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await update.message.reply_text(text.NAME_CHECK_MSG, parse_mode=config.PARSEMODE)
     return NAME
@@ -73,5 +75,5 @@ conv_handler = ConversationHandler(
             SCREEN: [MessageHandler(filters.TEXT & (~filters.Text(["/cancel", "/Cancel", "/CANCEL"])), screen)],
             REQUEST: [MessageHandler(filters.TEXT & (~filters.Text(["/cancel", "/Cancel", "/CANCEL"])), request)],
         },
-        fallbacks=[CommandHandler("cancel", cancel)],
+        fallbacks=[CommandHandler("cancel", cancel)]
     )
