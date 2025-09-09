@@ -1,5 +1,6 @@
 config.py
 whitelist.json
+data
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -2,9 +2,11 @@ import config
 from utils.whitelist import save_whitelist
 from telegram import Update
 from telegram.ext import ContextTypes
+from utils.whitelist import admin_only
 
 ADMIN_IDS = config.ADMIN_IDS  # Replace with actual admin Telegram user IDs
 
+@admin_only
 async def adduser(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     if user_id not in ADMIN_IDS:
